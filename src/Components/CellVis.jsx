@@ -1,4 +1,4 @@
-export default function Cell({ cell }) {
+export default function Cell({ cell, content }) {
   const style = {
     borderLeft: `${cell.westWall ? '0.125em solid black' : '0'}`,
     borderRight: `${cell.eastWall ? '0.125em solid black' : '0'}`,
@@ -7,6 +7,7 @@ export default function Cell({ cell }) {
   }
   return (
     <div className='cell' style={style}>
+      {content}
     </div>
   );
 };

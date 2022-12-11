@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+
 .App {
   text-align: center;
   padding: 0.625em;
+  font-family: 'Josefin Sans', sans-serif;
 }
 
 * {
@@ -11,7 +14,7 @@
   aspect-ratio: 1 / 1;
   margin: -0.06em;
   display: flex;
-  font-size: small;
+  font-size: 1em;
   justify-content: center;
   align-items: center;
 }

@@ -1,3 +1,5 @@
+import Distances from './Distances'
+
 export default class Cell {
   constructor(row, column) {
     this.row = row;
@@ -34,4 +36,23 @@ export default class Cell {
   neighbors() {
     return [this.north, this.south, this.east, this.west].filter((dir) => dir);
   }
-};
+
+  distances() {
+    const distances = new Distances(this);
+    let frontier = [this];
+
+    while (frontier.length) {
+      const newFrontier = [];
+      for (const cell of frontier) {
+        for (const linked of cell.links.keys()) {
+          if (!distances.has(linked)) {
+            distances.set(linked, distances.at(cell) + 1);
+            newFrontier.push(linked);
+          }
+        }
+      }
+      frontier = newFrontier;
+    }
+    return distances;
+  }
+}

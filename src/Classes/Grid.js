@@ -60,13 +60,13 @@ export default class Grid {
       for (let cell of row) {
         if (!cell) cell = new Cell(-1, -1);
 
-        const body = '   ';
+        const body = ` ${this.contentsOf(cell)} `;
         const eastBoundary = (cell.linked(cell.east) ? ' ' : '|');
         top += `${body}${eastBoundary}`;
 
         const southBoundary = (cell.linked(cell.south) ? '   ' : '---');
         const corner = '+';
-        bottom += `${southBoundary}${corner}`
+        bottom += `${southBoundary}${corner}`;
       }
       output += `${top}\n${bottom}\n`;
     }
@@ -86,5 +86,9 @@ export default class Grid {
 
   get size() {
     return this.rows * this.columns;
+  }
+
+  contentsOf(cell) {
+    return ' ';
   }
 }
