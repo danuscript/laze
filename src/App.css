@@ -12,11 +12,9 @@
 
 .cell {
   aspect-ratio: 1 / 1;
-  margin: -0.06em;
+  margin: -2px;
   display: flex;
   font-size: 1em;
-  justify-content: center;
-  align-items: center;
   overflow: hidden;
 }
 
@@ -29,6 +27,5 @@
 .grid {
   display: grid;
   max-height: calc(100vh - 1.35em);
-  height: 10%;
   margin: auto;
 }
