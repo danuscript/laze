@@ -3,7 +3,7 @@ import CellVis from './CellVis';
 export default function Grid({ grid }) {
   const maze = [];
   for (const row of grid.eachRow()) {
-    maze.push(row.map((cell) => <CellVis cell={cell} content={grid.contentsOf(cell)}/>))
+    maze.push(row.map((cell) => <CellVis cell={cell} distance={grid.contentsOf(cell)}/>))
   }
 
   const style = {

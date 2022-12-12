@@ -17,6 +17,13 @@
   font-size: 1em;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+}
+
+.cellBackground {
+  z-index: -1;
+  height: 100%;
+  width: 100%;
 }
 
 .grid {
