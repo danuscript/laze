@@ -12,7 +12,7 @@ export default function Cell({ cell, distance }) {
 
   return (
     <div className='cell' style={walls}>
-      <div className="cellBackground" style={backgroundColor}></div>
+      {/* <div className="cellBackground" style={backgroundColor}></div> */}
     </div>
   );
 };
