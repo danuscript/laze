@@ -8,6 +8,7 @@ export default function Cell({ cell, distance }) {
   }
   const backgroundColor = {
     backgroundColor: `rgb(${color}, ${color + 20}, ${color + 35})`,
+    // backgroundColor: `${typeof distance === 'number' ? 'teal' : 'white'}`
   }
 
   return (
