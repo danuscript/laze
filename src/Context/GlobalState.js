@@ -8,6 +8,7 @@ const initialState = {
   path: new Map(),
   position: null,
   solved: false,
+  darkMode: false,
 };
 
 const { grid, path } = initialState;
@@ -44,14 +45,23 @@ export const GlobalProvider = ({ children }) => {
     })
   };
 
+  const toggleDarkMode = (checked) => {
+    dispatch({
+      type: 'TOGGLE_DARK_MODE',
+      payload: checked,
+    })
+  }
+
   const values = {
     grid: state.grid,
     path: state.path,
     position: state.position,
     solved: state.solved,
+    darkMode: state.darkMode,
     generateMaze,
     move,
-    solve
+    solve,
+    toggleDarkMode
   };
 
   return (

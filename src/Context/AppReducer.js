@@ -40,8 +40,13 @@ export default function reducer(state, action) {
     }
 
     case 'SOLVE': {
-      const solved = true;
-      return {...state, solved};
+      return { ...state, solved: true };
+    }
+
+    case 'TOGGLE_DARK_MODE': {
+      const mode = action.payload ? 'dark' : 'light';
+      document.body.style.backgroundColor = `var(--${mode}Gray)`;
+      return { ...state, darkMode: action.payload }
     }
 
     default: return state;

@@ -3,6 +3,7 @@ import GridVis from './Components/GridVis';
 import Button from './Components/Button';
 import { GlobalContext, GlobalProvider } from './Context/GlobalState';
 import React, { useContext, useEffect } from 'react';
+import Toggle from './Components/Toggle';
 
 const App = () => {
   return (
@@ -15,7 +16,7 @@ const App = () => {
 const directions = { Up: 'north', Down: 'south', Left: 'west', Right: 'east' };
 
 const Main = () => {
-  const { grid, generateMaze, move, position, solve } = useContext(GlobalContext);
+  const { grid, generateMaze, move, position, darkMode, solve, toggleDarkMode } = useContext(GlobalContext);
 
   useEffect(() => {
     const handleKey = ({ key }) => {
@@ -38,9 +39,15 @@ const Main = () => {
     }
   }, [position]);
 
+  const onChange = (mode) => toggleDarkMode(mode);
+
   return (
-    <div className='App'>
-      <h1 className='title'>LAZE</h1>
+    <div className='App' style={{color: darkMode ? 'var(--lightBlue)' : 'var(--darkBlue)'}}>
+      <div className='header'>
+        <div className='twoPlayerButton'>1p / 2p</div>
+        <h1 className='title'>LAZE</h1>
+        <Toggle onChange={onChange} />
+      </div>
       <GridVis grid={grid} />
       <div className='buttonTray'>
         <Button label='new maze' onClick={() => generateMaze(15, 15)} />

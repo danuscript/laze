@@ -6,12 +6,13 @@
   --lightBlue: #91E9F2;
   --purple: #D9B0D2;
   --lightGray: #f2f2f2;
+  --darkGray: #2a2c33;
 }
 
 .App {
   text-align: center;
-  padding: 0.625em;
   font-family: 'Josefin Sans', sans-serif;
+  padding: 0.625em;
 }
 
 * {
@@ -20,11 +21,23 @@
 
 body {
   background-color: var(--lightGray);
+  transition: 0.3s;
+  transition-property: background-color;
+  margin: 0;
 }
 
 .title {
-  font-size: 2em;
-  color: var(--darkBlue);
+  font-size: 2.25em;
+  margin: 0;
+}
+
+.header {
+  display: flex;
+  padding: 0.25em;
+  justify-content: space-between;
+  align-items: flex-start;
+  height: 3em;
+  transition: color 0.3s ease-in-out;
 }
 
 .cell {
@@ -54,4 +67,35 @@ body {
   max-height: calc(100vh - 1.35em - 6em);
   margin: auto;
   position: relative;
+}
+
+.toggleContainer {
+  display: block;
+  width: 60px;
+  height: 30px;
+  background-color: #BDC0C8;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.toggle {
+  display: block;
+  width: 30px;
+  height: 30px;
+  background-color: var(--lightGray);
+  border-radius: 30px;
+  transition: left 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  position: relative;
+  left: 0;
+  border: 2px solid #BDC0C8;
+  box-sizing: border-box;
+}
+
+#checkbox:checked + .toggle {
+  left: 30px;
+  background-color: var(--darkGray);
+}
+
+#checkbox {
+  display: none;
 }
