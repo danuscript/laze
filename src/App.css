@@ -1,5 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
 
+:root {
+  --darkBlue: #397785;
+  --midBlue: #54ACBF;
+  --lightBlue: #91E9F2;
+  --purple: #D9B0D2;
+  --lightGray: #f2f2f2;
+}
+
 .App {
   text-align: center;
   padding: 0.625em;
@@ -10,6 +18,15 @@
   box-sizing: border-box;
 }
 
+body {
+  background-color: var(--lightGray);
+}
+
+.title {
+  font-size: 2em;
+  color: var(--darkBlue);
+}
+
 .cell {
   aspect-ratio: 1 / 1;
   margin: -2px;
@@ -18,14 +35,23 @@
   overflow: hidden;
 }
 
-.cellBackground {
-  z-index: -1;
+.solutionBackground {
+  z-index: -3;
+  position: absolute;
+}
+
+.pathBackground {
+  z-index: -2;
   height: 100%;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .grid {
   display: grid;
-  max-height: calc(100vh - 1.35em);
+  max-height: calc(100vh - 1.35em - 6em);
   margin: auto;
+  position: relative;
 }
