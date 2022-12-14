@@ -21,7 +21,7 @@ export default function reducer(state, action) {
       const distances = start.distances();
       grid.distances = distances.pathTo(grid.at(grid.rows - 1, grid.columns - 1));
 
-      return newState;
+      return { ...state, ...newState};
     }
 
     case 'MOVE': {
