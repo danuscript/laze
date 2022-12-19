@@ -4,6 +4,7 @@ import Button from './Components/Button';
 import { GlobalContext, GlobalProvider } from './Context/GlobalState';
 import React, { useContext, useEffect } from 'react';
 import Toggle from './Components/Toggle';
+import ModeSelect from './Components/ModeSelect';
 
 const App = () => {
   return (
@@ -44,14 +45,14 @@ const Main = () => {
   return (
     <div className='App' style={{color: darkMode ? 'var(--lightBlue)' : 'var(--darkBlue)'}}>
       <div className='header'>
-        <div className='twoPlayerButton'>1p / 2p</div>
+        <ModeSelect />
         <h1 className='title'>LAZE</h1>
         <Toggle onChange={onChange} />
       </div>
       <GridVis grid={grid} />
-      <div className='buttonTray'>
-        <Button label='new maze' onClick={() => generateMaze(15, 15)} />
-        <Button label='solve maze' onClick={() => solve(false)} />
+      <div className='buttonTray' style={{color: darkMode ? 'var(--lightBlue)' : 'var(--darkBlue)'}}>
+        <Button label='NEW MAZE' onClick={() => generateMaze(25, 25)} />
+        <Button label='SOLVE MAZE' secondary='true' onClick={() => solve(false)} />
       </div>
     </div>
   );

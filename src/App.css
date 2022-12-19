@@ -33,7 +33,9 @@ body {
 
 .header {
   display: flex;
-  padding: 0.25em;
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+  margin-bottom: 0.4em;
   justify-content: space-between;
   align-items: flex-start;
   height: 3em;
@@ -53,6 +55,31 @@ body {
   position: absolute;
 }
 
+.buttonTray {
+  margin-top: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
+
+button {
+  border: none;
+  font-family: 'Josefin sans', sans-serif;
+  font-size: medium;
+  height: 2.5em;
+  padding-top: 0;
+  padding-bottom: 0;
+  width: 8.5em;
+  border-radius: 10px;
+  transition: background-color 0.3s ease, border 0.3s ease;
+}
+
+.secondary {
+  font-family: 'Courier New', Courier, monospace;
+  border: 10px solid blue;
+}
+
 .pathBackground {
   z-index: -2;
   height: 100%;
@@ -64,7 +91,7 @@ body {
 
 .grid {
   display: grid;
-  max-height: calc(100vh - 1.35em - 6em);
+  max-height: calc(100vh - 1.35em - 7em);
   margin: auto;
   position: relative;
 }
@@ -73,9 +100,11 @@ body {
   display: block;
   width: 60px;
   height: 30px;
-  background-color: #BDC0C8;
+  background-color: var(--darkBlue);
   border-radius: 30px;
   cursor: pointer;
+  margin-left: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .toggle {
@@ -87,15 +116,59 @@ body {
   transition: left 0.3s ease-in-out, background-color 0.3s ease-in-out;
   position: relative;
   left: 0;
-  border: 2px solid #BDC0C8;
+  border: 3px solid var(--darkBlue);
   box-sizing: border-box;
 }
 
 #checkbox:checked + .toggle {
   left: 30px;
   background-color: var(--darkGray);
+  border: 3px solid var(--lightBlue);
 }
 
 #checkbox {
   display: none;
+}
+
+.mode-select {
+  display: flex;
+  align-items: center;
+  width: 80px;
+}
+
+.mode-option {
+  font-size: large;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  background-color: transparent;
+  color: currentColor;
+  border: 3px solid currentColor;
+  border-right: 0;
+  border-radius: 10px 0 0 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.mode-right {
+  font-size: large;
+  border-left: 0;
+  border-right: 3px solid currentColor;
+  border-radius: 0 10px 10px 0;
+}
+
+.active {
+  background-color: currentColor;
+  font-weight: bold;
+}
+
+.mode-option input[type="radio"] {
+  display: none;
+}
+
+.active > .playerLabel {
+  transition: color 0.3s;
 }

@@ -2,13 +2,29 @@ import React, { useContext } from 'react';
 import { GlobalContext } from '../Context/GlobalState';
 
 export default function Cell({ cell, distance }) {
-  const { solved, path, grid } = useContext(GlobalContext)
+  const { solved, path, grid, darkMode } = useContext(GlobalContext)
+  const wallColor = darkMode ? 'var(--lightBlue)' : 'var(--darkBlue)'
   const walls = {
-    borderLeft: `${cell.westWall ? '4px solid var(--darkBlue)' : '0'}`,
-    borderRight: `${cell.eastWall ? '4px solid var(--midBlue)' : '0'}`,
-    borderTop: `${cell.northWall ? '4px solid var(--midBlue)' : '0'}`,
-    borderBottom: `${cell.southWall ? '4px solid var(--darkBlue)' : '0'}`,
+    borderLeft: `${cell.westWall ? `4px solid ${wallColor}` : '0'}`,
+    borderRight: `${cell.eastWall ? `4px solid ${wallColor}` : '0'}`,
+    borderTop: `${cell.northWall ? `4px solid ${wallColor}` : '0'}`,
+    borderBottom: `${cell.southWall ? `4px solid ${wallColor}` : '0'}`,
   }
+
+  const rgbGradient = (offset) => {
+    const light = {
+      red: Math.min(145 + offset * 1.8, 217),
+      green: Math.max(233 + offset * -1.425, 176),
+      blue: Math.max(242 + offset * -0.8, 210),
+    };
+    const dark = {
+      red: Math.min(104 + offset * 1.575, 167),
+      green: 121,
+      blue: Math.max(204 + offset * -0.275, 193)
+  
+    }
+    return darkMode ? dark : light;
+  };
 
   const pathOffset = path.get(cell) || 0;
   const solutionOffset = +distance || 0;
@@ -30,6 +46,7 @@ export default function Cell({ cell, distance }) {
     opacity: `${+solved}`,
   }
 
+
   return (
     <div className='cell' style={walls}>
       <div className='pathBackground' style={pathStyle}></div>
@@ -38,8 +55,3 @@ export default function Cell({ cell, distance }) {
   );
 };
 
-const rgbGradient = (offset) => ({
-  red: Math.min(145 + offset * 1.8, 217),
-  green: Math.max(233 + offset * -1.425, 176),
-  blue: Math.max(242 + offset * -0.8, 210),
-});
