@@ -17,13 +17,13 @@ const App = () => {
 const directions = { Up: 'north', Down: 'south', Left: 'west', Right: 'east' };
 
 const Main = () => {
-  const { grid, generateMaze, move, position, darkMode, solve, toggleDarkMode } = useContext(GlobalContext);
+  const { grid, generateMaze, move, position, darkMode, solve, toggleDarkMode, changeMode, players} = useContext(GlobalContext);
 
   useEffect(() => {
     const handleKey = ({ key }) => {
       if (key.includes('Arrow')) {
         const direction = key.slice(5);
-        move(directions[direction]);
+        if (players === 1) move(directions[direction]);
       }
     };
 
@@ -40,18 +40,21 @@ const Main = () => {
     }
   }, [position]);
 
+  const onModeChange = (players) => changeMode(players);
+
   const onChange = (mode) => toggleDarkMode(mode);
 
   return (
     <div className='App' style={{color: darkMode ? 'var(--lightBlue)' : 'var(--darkBlue)'}}>
       <div className='header'>
-        <ModeSelect />
+        <ModeSelect onChange={onModeChange}/>
         <h1 className='title'>LAZE</h1>
         <Toggle onChange={onChange} />
       </div>
-      <GridVis grid={grid} />
+      <GridVis grid={grid} mode='1p'/>
+      <GridVis mode='2p'/>
       <div className='buttonTray' style={{color: darkMode ? 'var(--lightBlue)' : 'var(--darkBlue)'}}>
-        <Button label='NEW MAZE' onClick={() => generateMaze(25, 25)} />
+        <Button label='NEW MAZE' onClick={() => generateMaze(10, 10)} />
         <Button label='SOLVE MAZE' secondary='true' onClick={() => solve(false)} />
       </div>
     </div>

@@ -9,6 +9,7 @@ const initialState = {
   position: null,
   solved: false,
   darkMode: false,
+  players: 1,
 };
 
 const { grid, path } = initialState;
@@ -52,16 +53,25 @@ export const GlobalProvider = ({ children }) => {
     })
   }
 
+  const changeMode = (players) => {
+    dispatch({
+      type: 'CHANGE_MODE',
+      payload: players,
+    })
+  }
+
   const values = {
     grid: state.grid,
     path: state.path,
     position: state.position,
     solved: state.solved,
     darkMode: state.darkMode,
+    players: state.players,
     generateMaze,
     move,
     solve,
-    toggleDarkMode
+    toggleDarkMode,
+    changeMode
   };
 
   return (

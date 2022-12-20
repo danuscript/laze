@@ -48,6 +48,11 @@ export default function reducer(state, action) {
       document.body.style.backgroundColor = `var(--${mode}Gray)`;
       return { ...state, darkMode: action.payload }
     }
+    
+    case 'CHANGE_MODE': {
+      console.log(action.payload);
+      return { ...state, players: action.payload };
+    }
 
     default: return state;
   }

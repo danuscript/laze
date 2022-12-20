@@ -1,16 +1,18 @@
 import React, { useState, useContext } from 'react';
 import { GlobalContext } from '../Context/GlobalState';
 
-const ModeSelect = () => {
+const ModeSelect = ({onChange}) => {
   const [mode, setMode] = useState('1P');
   const { darkMode } = useContext(GlobalContext);
 
   const handleModeChange = (event) => {
     setMode(event.target.value);
+    onChange(+event.target.value[0]);
   };
 
+  
+
   const bgColor = darkMode ? 'var(--darkGray)' : 'var(--lightGray';
-  console.log(darkMode);
 
   return (
     <div className="mode-select">
