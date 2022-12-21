@@ -25,7 +25,8 @@ export default function reducer(state, action) {
     }
 
     case 'MOVE': {
-      let direction = action.payload;
+      const directions = { Up: 'north', Down: 'south', Left: 'west', Right: 'east' };
+      let direction = directions[action.payload];
       let { solved, path, position } = state;
       if (solved) return state;
       const next = position[direction];
@@ -50,7 +51,6 @@ export default function reducer(state, action) {
     }
     
     case 'CHANGE_MODE': {
-      console.log(action.payload);
       return { ...state, players: action.payload };
     }
 

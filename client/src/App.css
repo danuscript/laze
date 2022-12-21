@@ -93,6 +93,7 @@ button {
   display: grid;
   max-height: calc(100vh - 1.35em - 7em);
   margin: auto;
+  aspect-ratio: 1/1;
   position: relative;
 }
 

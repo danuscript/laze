@@ -10,8 +10,6 @@ const ModeSelect = ({onChange}) => {
     onChange(+event.target.value[0]);
   };
 
-  
-
   const bgColor = darkMode ? 'var(--darkGray)' : 'var(--lightGray';
 
   return (
