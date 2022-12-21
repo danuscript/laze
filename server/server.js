@@ -39,9 +39,23 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     console.log(`Client disconnected: ${socket.id}`);
-
     delete gameState.players[socket.id];
+    console.log('Players: ', Object.keys(gameState.players).length);
 
+    io.emit('state', gameState);
+  });
+
+  socket.on('move', (dir) => {
+    const directions = {
+      Up: 'north', Down: 'south', Left: 'west', Right: 'east',
+    };
+    const direction = directions[dir];
+    console.log(direction);
+    io.emit('state', gameState);
+  });
+
+  socket.on('createRoom', () => {
+    console.log('createRoom');
     io.emit('state', gameState);
   });
 });

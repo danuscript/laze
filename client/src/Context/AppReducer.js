@@ -54,6 +54,10 @@ export default function reducer(state, action) {
       return { ...state, players: action.payload };
     }
 
+    case 'SET_SOCKET': {
+      return { ...state, socket: action.payload }
+    }
+
     default: return state;
   }
 }

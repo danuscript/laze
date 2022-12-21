@@ -24,7 +24,8 @@ const Main = () => {
     solve,
     toggleDarkMode,
     changeMode,
-    players
+    players,
+    socket,
   } = useContext(GlobalContext);
 
   useEffect(() => {
@@ -58,7 +59,7 @@ const Main = () => {
             <div className='buttonTray' style={{
               color: darkMode ? 'var(--lightBlue)' : 'var(--darkBlue)',
             }}>
-              <Button label='START ROOM' onClick={(socket) => socket.emit('createRoom')} />
+              <Button label='START ROOM' onClick={() => socket.emit('createRoom')} />
               <Button label='JOIN ROOM' secondary='true' />
             </div>
           </>)

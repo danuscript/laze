@@ -4,12 +4,13 @@ import socketIoClient from 'socket.io-client';
 import CellVis from './CellVis';
 
 export default function GridVis2p() {
-  const { darkMode } = useContext(GlobalContext);
+  const { darkMode, setSocket } = useContext(GlobalContext);
 
   const [gameState, setGameState] = useState(null);
 
   useEffect(() => {
     const socket = socketIoClient('http://localhost:3005');
+    setSocket(socket);
 
     socket.on('state', (state) => {
       setGameState(state);
@@ -24,6 +25,7 @@ export default function GridVis2p() {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       socket.disconnect();
+      setSocket(null);
     };
   }, []);
 

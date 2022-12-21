@@ -10,6 +10,7 @@ const initialState = {
   solved: false,
   darkMode: false,
   players: 1,
+  socket: null,
 };
 
 const { grid, path } = initialState;
@@ -60,18 +61,21 @@ export const GlobalProvider = ({ children }) => {
     })
   }
 
+  const setSocket = (socket) => {
+    dispatch({
+      type: 'SET_SOCKET',
+      payload: socket,
+    })
+  }
+
   const values = {
-    grid: state.grid,
-    path: state.path,
-    position: state.position,
-    solved: state.solved,
-    darkMode: state.darkMode,
-    players: state.players,
+    ...state,
     generateMaze,
     move,
     solve,
     toggleDarkMode,
-    changeMode
+    changeMode,
+    setSocket,
   };
 
   return (
