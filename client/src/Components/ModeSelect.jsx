@@ -3,11 +3,12 @@ import { GlobalContext } from '../Context/GlobalState';
 
 const ModeSelect = ({onChange}) => {
   const [mode, setMode] = useState('1P');
-  const { darkMode } = useContext(GlobalContext);
+  const { darkMode, openJoinForm } = useContext(GlobalContext);
 
   const handleModeChange = (event) => {
     setMode(event.target.value);
     onChange(+event.target.value[0]);
+    if (event.target.value[0] === '1') openJoinForm(false);
   };
 
   const bgColor = darkMode ? 'var(--darkGray)' : 'var(--lightGray';

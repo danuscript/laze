@@ -9,6 +9,11 @@
   --darkGray: #2a2c33;
 }
 
+::placeholder {
+  color: var(--placeholder-color);
+  opacity: 0.5;
+}
+
 .App {
   text-align: center;
   font-family: 'Josefin Sans', sans-serif;
@@ -63,6 +68,10 @@ body {
   gap: 1em;
 }
 
+*:focus {
+  outline: none;
+}
+
 button {
   border: none;
   font-family: 'Josefin sans', sans-serif;
@@ -73,6 +82,7 @@ button {
   width: 8.5em;
   border-radius: 10px;
   transition: background-color 0.3s ease, border 0.3s ease;
+  cursor: pointer;
 }
 
 .secondary {
@@ -92,9 +102,17 @@ button {
 .grid {
   display: grid;
   max-height: calc(100vh - 1.35em - 7em);
+  height: 100%;
   margin: auto;
   aspect-ratio: 1/1;
   position: relative;
+}
+
+.instructions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1em;
 }
 
 .toggleContainer {

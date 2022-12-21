@@ -34,8 +34,8 @@ export default function reducer(state, action) {
         path.delete(position);
         position = next;
       } else if (next && position.linked(next)) {
-        path.set(next, path.size)
-        position = next
+        path.set(next, path.size);
+        position = next;
       }
       return { ...state, path, position };
     }
@@ -47,7 +47,7 @@ export default function reducer(state, action) {
     case 'TOGGLE_DARK_MODE': {
       const mode = action.payload ? 'dark' : 'light';
       document.body.style.backgroundColor = `var(--${mode}Gray)`;
-      return { ...state, darkMode: action.payload }
+      return { ...state, darkMode: action.payload };
     }
     
     case 'CHANGE_MODE': {
@@ -55,7 +55,11 @@ export default function reducer(state, action) {
     }
 
     case 'SET_SOCKET': {
-      return { ...state, socket: action.payload }
+      return { ...state, socket: action.payload };
+    }
+
+    case 'OPEN_JOIN_FORM': {
+      return { ...state, joinForm: action.payload };
     }
 
     default: return state;

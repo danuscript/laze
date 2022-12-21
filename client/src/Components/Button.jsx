@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { GlobalContext } from "../Context/GlobalState";
 
-export default function Button({ label, onClick, secondary }) {
+export default function Button({ label, onClick, secondary, type }) {
   const { darkMode } = useContext(GlobalContext);
   let backgroundColor = darkMode ? 'var(--lightBlue)' : 'var(--darkBlue)';
   if (secondary) backgroundColor = darkMode ? 'var(--darkGray)' : 'var(--lightGray)';

@@ -8,10 +8,6 @@ const app = express();
 
 const server = http.createServer(app);
 
-const maze = new DistanceGrid(15, 15);
-Kruskals.on(maze);
-maze.addWalls();
-
 const io = socketIo(server, {
   cors: {
     origin: 'http://localhost:3000',
@@ -24,25 +20,43 @@ server.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
 
-const gameState = {
-  mazes: { maze1: maze.minify() },
+const games = {
+  rooms: {},
   players: {},
 };
 
 io.on('connection', (socket) => {
   console.log(`New client connected: ${socket.id}`);
 
-  gameState.players[socket.id] = new Map();
-  console.log('Players: ', Object.keys(gameState.players).length);
-
-  io.emit('state', gameState);
+  games.players[socket.id] = { room: null, path: new Map() };
+  console.log('Players: ', Object.keys(games.players).length);
 
   socket.on('disconnect', () => {
     console.log(`Client disconnected: ${socket.id}`);
-    delete gameState.players[socket.id];
-    console.log('Players: ', Object.keys(gameState.players).length);
+    const { room } = games.players[socket.id];
+    delete games.players[socket.id];
+    console.log('Players: ', Object.keys(games.players).length);
+    if (room) io.to(room).emit('state', games.rooms[room]);
+  });
 
-    io.emit('state', gameState);
+  socket.on('createRoom', (roomName) => {
+    console.log(`Creating new room: ${roomName}`);
+    socket.join(roomName);
+
+    const maze = new DistanceGrid(15, 15);
+    Kruskals.on(maze);
+    maze.addWalls();
+
+    games.rooms[roomName] = { roomName, maze: maze.minify(), ready: false };
+    io.to(roomName).emit('state', games.rooms[roomName]);
+  });
+
+  socket.on('joinRoom', (roomName) => {
+    console.log(`Joining room: ${roomName}`);
+    socket.join(roomName);
+    console.log(games);
+    games.rooms[roomName].ready = true;
+    io.to(roomName).emit('state', games.rooms[roomName]);
   });
 
   socket.on('move', (dir) => {
@@ -51,11 +65,6 @@ io.on('connection', (socket) => {
     };
     const direction = directions[dir];
     console.log(direction);
-    io.emit('state', gameState);
-  });
-
-  socket.on('createRoom', () => {
-    console.log('createRoom');
-    io.emit('state', gameState);
+    io.emit('state', games);
   });
 });

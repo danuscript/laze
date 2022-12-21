@@ -6,6 +6,7 @@ import React, { useContext, useEffect } from 'react';
 import Toggle from './Components/Toggle';
 import ModeSelect from './Components/ModeSelect';
 import GridVis2p from './Components/GridVis2p';
+import { randomCode } from './Classes/RandomCode';
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const Main = () => {
     changeMode,
     players,
     socket,
+    openJoinForm,
   } = useContext(GlobalContext);
 
   useEffect(() => {
@@ -50,17 +52,19 @@ const Main = () => {
             <div className='buttonTray' style={{
               color: darkMode ? 'var(--lightBlue)' : 'var(--darkBlue)',
             }}>
-              <Button label='NEW MAZE' onClick={() => generateMaze(10, 10)} />
+              <Button label='NEW MAZE' onClick={() => generateMaze(15, 15)} />
               <Button label='SOLVE MAZE' secondary='true' onClick={() => solve(false)} />
             </div>
-          </>)
-          : (<>
+          </>) : (<>
             <GridVis2p />
             <div className='buttonTray' style={{
               color: darkMode ? 'var(--lightBlue)' : 'var(--darkBlue)',
             }}>
-              <Button label='START ROOM' onClick={() => socket.emit('createRoom')} />
-              <Button label='JOIN ROOM' secondary='true' />
+              <Button label='START ROOM' onClick={() => {
+                socket.emit('createRoom', randomCode());
+                openJoinForm(false);
+              }} />
+              <Button label='JOIN ROOM' secondary='true' onClick={() => openJoinForm(true)} />
             </div>
           </>)
       }

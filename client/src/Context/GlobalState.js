@@ -11,6 +11,7 @@ const initialState = {
   darkMode: false,
   players: 1,
   socket: null,
+  joinForm: false,
 };
 
 const { grid, path } = initialState;
@@ -68,6 +69,13 @@ export const GlobalProvider = ({ children }) => {
     })
   }
 
+  const openJoinForm = (open) => {
+    dispatch({
+      type: 'OPEN_JOIN_FORM',
+      payload: open,
+    })
+  }
+
   const values = {
     ...state,
     generateMaze,
@@ -76,6 +84,7 @@ export const GlobalProvider = ({ children }) => {
     toggleDarkMode,
     changeMode,
     setSocket,
+    openJoinForm,
   };
 
   return (
