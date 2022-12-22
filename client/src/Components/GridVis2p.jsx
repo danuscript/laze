@@ -8,10 +8,15 @@ export default function GridVis2p() {
   const { darkMode, setSocket, joinForm } = useContext(GlobalContext);
 
   const [gameState, setGameState] = useState(null);
+  const [socketId, setSocketId] = useState(null);
 
   useEffect(() => {
     const socket = socketIoClient('http://localhost:3005');
     setSocket(socket);
+    
+    socket.on('connect', () => {
+      setSocketId(socket.id);
+    });
 
     socket.on('state', (state) => {
       setGameState(state);
@@ -26,6 +31,7 @@ export default function GridVis2p() {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       socket.disconnect();
+      setSocketId(null);
       setSocket(null);
     };
   }, []);
@@ -39,8 +45,10 @@ export default function GridVis2p() {
           row.map((cell) => <CellVis2p
             key={`${cell.row},${cell.column}`}
             cell={cell}
-            p1Path={gameState.p1Path}
-            p2path={gameState.p2path}
+            pathA={gameState.p1Path}
+            pathB={gameState.p2Path}
+            grid={gameState.maze}
+            player1={socketId === gameState.player1}
           />)
         ))}
       </div>

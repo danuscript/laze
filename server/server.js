@@ -1,6 +1,5 @@
 const express = require('express');
 const http = require('http');
-const path = require('path');
 const socketIo = require('socket.io');
 const DistanceGrid = require('./Classes/DistanceGrid');
 const Kruskals = require('./Classes/Kruskals');
@@ -58,7 +57,7 @@ io.on('connection', (socket) => {
     player.position = [0, 0];
 
     games.rooms[roomName] = {
-      roomName, maze: miniMaze, ready: false, p1Path: player.path, p2Path: null,
+      roomName, maze: miniMaze, ready: false, p1Path: player.path, p2Path: null, player1: socket.id,
     };
 
     io.to(roomName).emit('state', games.rooms[roomName]);
@@ -73,8 +72,8 @@ io.on('connection', (socket) => {
     const { maze } = games.rooms[roomName];
     player.room = roomName;
     player.path = { length: 0 };
-    player.position = [maze.length - 1, maze[0].length - 1];
-    player.path[`${player.position},${player.position}`] = {
+    player.position = [0, maze[0].length - 1];
+    player.path[`${player.position[0]},${player.position[1]}`] = {
       cell: maze.at(-1).at(-1), idx: 0,
     };
 
