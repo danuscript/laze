@@ -1,8 +1,10 @@
 const express = require('express');
 const http = require('http');
+const path = require('path');
 const socketIo = require('socket.io');
 const DistanceGrid = require('./Classes/DistanceGrid');
 const Kruskals = require('./Classes/Kruskals');
+const move = require('./Classes/Move');
 
 const app = express();
 
@@ -28,7 +30,7 @@ const games = {
 io.on('connection', (socket) => {
   console.log(`New client connected: ${socket.id}`);
 
-  games.players[socket.id] = { room: null, path: new Map() };
+  games.players[socket.id] = { room: null, path: { length: 0 } };
   console.log('Players: ', Object.keys(games.players).length);
 
   socket.on('disconnect', () => {
@@ -47,24 +49,44 @@ io.on('connection', (socket) => {
     Kruskals.on(maze);
     maze.addWalls();
 
-    games.rooms[roomName] = { roomName, maze: maze.minify(), ready: false };
+    const miniMaze = maze.minify();
+
+    const player = games.players[socket.id];
+    player.room = roomName;
+    player.path['0,0'] = { cell: miniMaze[0][0], idx: 0 };
+    player.path.length += 1;
+    player.position = [0, 0];
+
+    games.rooms[roomName] = {
+      roomName, maze: miniMaze, ready: false, p1Path: player.path, p2Path: null,
+    };
+
     io.to(roomName).emit('state', games.rooms[roomName]);
   });
 
   socket.on('joinRoom', (roomName) => {
     console.log(`Joining room: ${roomName}`);
     socket.join(roomName);
-    console.log(games);
     games.rooms[roomName].ready = true;
+
+    const player = games.players[socket.id];
+    const { maze } = games.rooms[roomName];
+    player.room = roomName;
+    player.path = { length: 0 };
+    player.position = [maze.length - 1, maze[0].length - 1];
+    player.path[`${player.position},${player.position}`] = {
+      cell: maze.at(-1).at(-1), idx: 0,
+    };
+
+    games.rooms[roomName].p2Path = player.path;
+
     io.to(roomName).emit('state', games.rooms[roomName]);
   });
 
   socket.on('move', (dir) => {
-    const directions = {
-      Up: 'north', Down: 'south', Left: 'west', Right: 'east',
-    };
-    const direction = directions[dir];
-    console.log(direction);
-    io.emit('state', games);
+    const player = games.players[socket.id];
+    const { maze } = games.rooms[player.room];
+    move(maze, dir, player.position, player.path);
+    io.emit('state', games.rooms[player.room]);
   });
 });

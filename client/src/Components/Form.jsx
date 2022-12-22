@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { GlobalContext } from '../Context/GlobalState';
-import Button from './Button';
 
 const Form = () => {
   const inputRef = React.createRef();
@@ -45,11 +44,6 @@ const Form = () => {
     alignItems: 'center',
     justifyContent: 'center',
   }
-
-  const placeholderStyle = `.inputField::placeholder{
-    opacity: 0.5;
-    color: ${backgroundColor};
-  }`
 
   return (
     <form onSubmit={handleSubmit} style={formStyle}>

@@ -101,6 +101,10 @@ class Grid {
         southWall: cell.southWall,
         eastWall: cell.eastWall,
         westWall: cell.westWall,
+        north: cell.linked(cell.north),
+        south: cell.linked(cell.south),
+        east: cell.linked(cell.east),
+        west: cell.linked(cell.west),
       }))
     ));
   }

@@ -1,11 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
 import { GlobalContext } from "../Context/GlobalState";
 import socketIoClient from 'socket.io-client';
-import CellVis from './CellVis';
+import CellVis2p from './CellVis2p';
 import Form from "./Form";
 
 export default function GridVis2p() {
-  const { darkMode, setSocket, joinForm, openJoinForm } = useContext(GlobalContext);
+  const { darkMode, setSocket, joinForm } = useContext(GlobalContext);
 
   const [gameState, setGameState] = useState(null);
 
@@ -36,7 +36,12 @@ export default function GridVis2p() {
         gridTemplateColumns: `repeat(${gameState.maze[0].length}, 1fr)`
       }}>
         {gameState.maze.map((row) => (
-          row.map((cell) => <CellVis key={`${cell.row},${cell.column}`} cell={cell} />)
+          row.map((cell) => <CellVis2p
+            key={`${cell.row},${cell.column}`}
+            cell={cell}
+            p1Path={gameState.p1Path}
+            p2path={gameState.p2path}
+          />)
         ))}
       </div>
     );
