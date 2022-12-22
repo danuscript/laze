@@ -54,7 +54,15 @@ export default function Cell2p({ cell, pathA, pathB, grid, player1 }) {
     opacity: `${+(key in p2Path)}`
   };
 
-  if (key in p2Path) console.log(p2Background.backgroundColor);
+  if (player1) {
+    if (!cell.row && !cell.column) walls.borderLeft = '0';
+    if (cell.row === grid.length - 1 && cell.column === grid[0].length - 1) {
+      walls.borderRight = '0';
+    }
+  } else {
+    if (!cell.row && cell.column === grid[0].length - 1) walls.borderRight = '0';
+    if (!cell.column && cell.row === grid.length - 1) walls.borderLeft = '0';
+  }
 
   return (
     <div className='cell' style={walls}>

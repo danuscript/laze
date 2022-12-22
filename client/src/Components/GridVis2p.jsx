@@ -1,10 +1,10 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { GlobalContext } from "../Context/GlobalState";
 import socketIoClient from 'socket.io-client';
 import CellVis2p from './CellVis2p';
 import Form from "./Form";
 
-export default function GridVis2p() {
+export default function GridVis2p({ notify, buttonToast }) {
   const { darkMode, setSocket, joinForm } = useContext(GlobalContext);
 
   const [gameState, setGameState] = useState(null);
@@ -13,13 +13,40 @@ export default function GridVis2p() {
   useEffect(() => {
     const socket = socketIoClient('http://localhost:3005');
     setSocket(socket);
-    
+
     socket.on('connect', () => {
       setSocketId(socket.id);
     });
 
     socket.on('state', (state) => {
       setGameState(state);
+      console.log('got state update');
+    });
+
+    socket.on('roomFull', (roomName) => {
+      notify(`Room ${roomName.toUpperCase()} is already full!`, 'error');
+    })
+
+    socket.on('invalidRoom', (roomName) => {
+      notify(`${roomName.toUpperCase().slice(0,6)}${roomName.length > 6 ? '. . .' : ''} is an invalid room code.`, 'error');
+    })
+
+    socket.on('joinedRoom', (roomName) => {
+      notify(`Successfully joined room ${roomName.toUpperCase()}`, 'success');
+    })
+
+    socket.on('playerDisconnected', (player1) => {
+      if (player1) notify('Player 1 has disconnected from the room. . .', 'error');
+      else notify(`Player 2 has disconnected from the room. . .`, 'error')
+    })
+
+    socket.on('winner', (win) => {
+      if (win) notify('You won!', 'default');
+      else notify('You lost...', 'default');
+    })
+
+    socket.on('newGame', () => {
+      buttonToast();
     });
 
     const handleKeyDown = ({ key }) => {

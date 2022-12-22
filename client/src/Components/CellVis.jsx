@@ -17,11 +17,11 @@ export default function Cell({ cell, distance }) {
       green: Math.max(233 + offset * -1.425, 176),
       blue: Math.max(242 + offset * -0.8, 210),
     };
+
     const dark = {
       red: Math.min(104 + offset * 1.575, 167),
       green: 121,
-      blue: Math.max(204 + offset * -0.275, 193)
-  
+      blue: Math.max(204 + offset * -0.275, 193),
     }
     return darkMode ? dark : light;
   };
@@ -46,6 +46,10 @@ export default function Cell({ cell, distance }) {
     opacity: `${+solved}`,
   }
 
+  if (!cell.row && !cell.column) walls.borderLeft = '0';
+  if (cell.row === grid.rows - 1 && cell.column === grid.columns - 1) {
+    walls.borderRight = '0';
+  }
 
   return (
     <div className='cell' style={walls}>

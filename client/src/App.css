@@ -85,6 +85,10 @@ button {
   cursor: pointer;
 }
 
+code {
+  font-family: 'Courier New', Courier, monospace;
+}
+
 .secondary {
   font-family: 'Courier New', Courier, monospace;
   border: 10px solid blue;
